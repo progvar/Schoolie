@@ -1,0 +1,12 @@
+/* line 1, ../sass/main.scss */
+.panel {
+  max-width: 250px;
+  margin-top: 20px !important;
+  padding: 10px;
+  text-align: center;
+  margin: auto;
+}
+/* line 7, ../sass/main.scss */
+.panel .btn {
+  margin-top: 20px;
+}
