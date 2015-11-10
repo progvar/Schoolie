@@ -3,16 +3,13 @@
 <div class="jumbotron text-center">
 	<h1>Sign in</h1>
 	<p>We're using passport.js to demonstrate user authentication. Please sign-in with your Local, Twitter, Google, or Facebook account to view your profile.</p>
-	<p>
-		<a data-toggle="collapse" href="#local" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> Sign in</a>
-	</p>
+	<div id="local">	
+		<a data-toggle="collapse" data-parent="#local" href="#local-sign-in" class="btn btn-default btn-md" role="button">I already have an account</a>
+		<a data-toggle="collapse"  data-parent="#local" href="#local-reg" class="btn btn-default btn-md" role="button">I need to make an account</a>
+		
+		<div class="panel panel-default">
 
-	<div id="local" class="collapse">
-
-			<a data-toggle="collapse" data-parent="#local" href="#local-sign-in" class="btn btn-default btn-md" role="button">I already have an account</a>
-			<a data-toggle="collapse"  data-parent="#local"href="#local-reg" class="btn btn-default btn-md" role="button">I need to make an account</a>
-
-			<div class="panel panel-default">
+			<!-- LOGIN -->
 			<form id="local-sign-in" class="collapse in" action="/login" method="post">
 				<div>
 					<p></p>
@@ -24,10 +21,11 @@
 					<input type="password" name="password"/>
 				</div>
 				<div>
-					<input type="submit" class="btn btn-primary btn-sm" value="Log In"/>
+					<input type="submit" class="btn btn-success btn-sm" value="Log In"/>
 				</div>
 			</form>
 
+			<!-- REGISTER -->
 			<form id="local-reg" class="collapse" action="/local-reg" method="post">
 				<div>
 					<p></p>
@@ -39,7 +37,7 @@
 					<input type="password" name="password"/>
 				</div>
 				<div>
-					<input type="submit" class="btn btn-primary btn-sm" value="Register"/>
+					<input type="submit" class="btn btn-success btn-sm" value="Register"/>
 				</div>
 			</form>
 		</div>
