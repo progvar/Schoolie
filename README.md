@@ -1,1 +1,1 @@
-Schoolie is a lightweight school management system built with the MEAN stack.
+Schoolie is a lightweight school management system built using the MEAN stack.
