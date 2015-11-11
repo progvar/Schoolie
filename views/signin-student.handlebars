@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- views/signin-teacher.handlebars -->
+<div class="jumbotron text-center">
+	<h1>Sign in</h1>
+	<p>You can register a new account or Sign In using your existing one.</p>
+	<div id="local">	
+		<a data-toggle="collapse" data-parent="#local" href="#student-sign-in" class="btn btn-default btn-md" role="button">I already have an account</a>
+		<a data-toggle="collapse"  data-parent="#local" href="#student-reg" class="btn btn-default btn-md" role="button">I need to make an account</a>
+		
+		<div class="panel panel-default">
+
+			<!-- LOGIN -->
+			<form id="student-sign-in" class="collapse in" action="/student-login" method="post">
+				<div>
+					<p></p>
+					<label>Username:</label>
+					<input type="text" name="username"/>
+				</div>
+				<div>
+					<label>Password:</label>
+					<input type="password" name="password"/>
+				</div>
+				<div>
+					<input type="submit" class="btn btn-success btn-sm" value="Log In"/>
+				</div>
+			</form>
+
+			<!-- REGISTER -->
+			<form id="student-reg" class="collapse" action="/student-reg" method="post">
+				<div>
+					<p></p>
+					<label>New Username:</label>
+					<input type="text" name="username"/>
+				</div>
+				<div>
+					<label>New Password:</label>
+					<input type="password" name="password"/>
+				</div>
+				<div>
+					<input type="submit" class="btn btn-success btn-sm" value="Register"/>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>

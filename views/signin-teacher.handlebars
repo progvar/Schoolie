@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<!-- views/signin.handlebars -->
+<!-- views/signin-teacher.handlebars -->
 <div class="jumbotron text-center">
 	<h1>Sign in</h1>
-	<p>We're using passport.js to demonstrate user authentication. Please sign-in with your Local, Twitter, Google, or Facebook account to view your profile.</p>
+	<p>You can register a new account or Sign In using your existing one.</p>
 	<div id="local">	
-		<a data-toggle="collapse" data-parent="#local" href="#local-sign-in" class="btn btn-default btn-md" role="button">I already have an account</a>
-		<a data-toggle="collapse"  data-parent="#local" href="#local-reg" class="btn btn-default btn-md" role="button">I need to make an account</a>
+		<a data-toggle="collapse" data-parent="#local" href="#teacher-sign-in" class="btn btn-default btn-md" role="button">I already have an account</a>
+		<a data-toggle="collapse"  data-parent="#local" href="#teacher-reg" class="btn btn-default btn-md" role="button">I need to make an account</a>
 		
 		<div class="panel panel-default">
 
 			<!-- LOGIN -->
-			<form id="local-sign-in" class="collapse in" action="/login" method="post">
+			<form id="teacher-sign-in" class="collapse in" action="/teacher-login" method="post">
 				<div>
 					<p></p>
 					<label>Username:</label>
@@ -26,7 +26,7 @@
 			</form>
 
 			<!-- REGISTER -->
-			<form id="local-reg" class="collapse" action="/local-reg" method="post">
+			<form id="teacher-reg" class="collapse" action="/teacher-reg" method="post">
 				<div>
 					<p></p>
 					<label>New Username:</label>

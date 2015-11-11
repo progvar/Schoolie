@@ -3,7 +3,7 @@ var bcrypt = require("bcryptjs");
 	config = require("./config.js"),
 		db = require("orchestrate")(config.db);
 
-exports.localReg = function(username,password){
+exports.teacherReg = function(username,password){
 	var deferred = Q.defer();
 	var hash = bcrypt.hashSync(password.toString());
 	var user = {
@@ -11,14 +11,14 @@ exports.localReg = function(username,password){
 		"password": hash,
 		"avatar": "http://www.iconpot.com/icon/preview/funny-avatar.jpg"
 	}
-	db.get("local-users", username).then(function (result){
+	db.get("teachers", username).then(function (result){
 		console.log("Username already exists.");
 		deferred.resolve(false);
 	}).fail(function(result){
 		console.log(result.body);
 		if(result.body.message == "The requested items could not be found."){
 			console.log("Username is free for use.");
-			db.put("local-users", username, user).then(function(){
+			db.put("teachers", username, user).then(function(){
 				console.log("User: " + user);
 				deferred.resolve(user);
 			}).fail(function(err){
@@ -32,10 +32,10 @@ exports.localReg = function(username,password){
 	return deferred.promise;
 };
 
-exports.localAuth = function(username, password){
+exports.teacherAuth = function(username, password){
 	var deferred = Q.defer();
 
-	db.get("local-users", username).then(function(result){
+	db.get("teachers", username).then(function(result){
 		console.log("Found User");
 		var hash = result.body.password;
 		console.log(hash);
@@ -56,14 +56,3 @@ exports.localAuth = function(username, password){
 	});
 	return deferred.promise;
 };
-
-
-
-
-
-
-
-
-
-
-

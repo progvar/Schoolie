@@ -1,18 +1,17 @@
-var express = require('express'),
-exphbs = require('express-handlebars'),
-logger = require('morgan'),
-cookieParser = require('cookie-parser'),
-bodyParser = require('body-parser'),
-methodOverride = require('method-override'),
-session = require('express-session'),
-passport = require('passport'),
-LocalStrategy = require('passport-local'),
-TwitterStrategy = require('passport-twitter'),
-GoogleStrategy = require('passport-google'),
-FacebookStrategy = require('passport-facebook');
+	var express = require('express'),
+	exphbs = require('express-handlebars'),
+	logger = require('morgan'),
+	cookieParser = require('cookie-parser'),
+	bodyParser = require('body-parser'),
+	methodOverride = require('method-override'),
+	session = require('express-session'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local');
 
- var config = require('./config.js'), //config file contains all tokens and other private info
-    funct = require('./functions.js'); //funct file contains our helper functions for our Passport and database work
+ 	var config = require('./config.js'), //config file contains all tokens and other private info
+    studentFunct = require('./studentFunctions.js'),
+    teacherFunct = require('./teacherFunctions.js'); //funct files contains our helper functions for our Passport and database work
+
     var app = express();
     app.use(express.static('public'));
     app.use(logger('combined'));
@@ -61,48 +60,104 @@ passport.deserializeUser(function (obj, done){
 });
 
 
-passport.use('local-signin', new LocalStrategy(
-	{passReqToCallback: true},
-
-	function(req, username, password, done){
-		funct.localAuth(username, password).then(function (user){
-			if(user){
-				console.log("Logged in as " + user.username);
-				req.session.success = "You are succesfully logged in " + user.username + " !";
-				done(null, user);
-			}
-			if(!user){
-				console.log("COULD NOT LOG IN!");
-				req.session.error = "Could not log user in. Please try again.";
-				done(null, user);
-			}
-		}).fail(function(err){
-			console.log(err.body);
-	});
-	}
-));
-
-
-passport.use("local-signup", new LocalStrategy(
+passport.use("student-signup", new LocalStrategy(
 	{passReqToCallback:true},
 
 	function(req, username, password, done){
-		funct.localReg(username, password).then(function (user){
+		studentFunct.studentReg(username, password).then(function (user){
+
 			if(user){
 				console.log("Registered " + user.username);
 				req.session.success = "You are now registered and logged in as " + user.username + " !";
 				done(null, user);
 			}
+
 			if(!user){
 				console.log("COULD NOT REGISTER!");
 				req.session.error = "That username is already in use, please try a different one."
 				done(null, user);
 			}
+
 		}).fail(function(err){
 			console.log(err.body);
 		});
 	}
 ));
+
+
+passport.use('student-signin', new LocalStrategy(
+	{passReqToCallback: true},
+
+	function(req, username, password, done){
+		studentFunct.studentAuth(username, password).then(function (user){
+
+			if(user){
+				console.log("Logged in as " + user.username);
+				req.session.success = "You are succesfully logged in " + user.username + " !";
+				done(null, user);
+			}
+
+			if(!user){
+				console.log("COULD NOT LOG IN!");
+				req.session.error = "Could not log user in. Please try again.";
+				done(null, user);
+			}
+
+		}).fail(function(err){
+			console.log(err.body);
+		});
+	}
+));
+
+passport.use('teacher-signup', new LocalStrategy(
+	{passReqToCallback: true},
+
+	function(req, username, password, done){
+		teacherFunct.teacherReg(username, password).then(function (user){
+
+			if(user){
+				console.log("Logged in as " + user.username);
+				req.session.success = "You are succesfully logged in " + user.username + " !";
+				done(null, user);
+			}
+
+			if(!user){
+				console.log("COULD NOT LOG IN!");
+				req.session.error = "Could not log user in. Please try again.";
+				done(null, user);
+			}
+
+		}).fail(function(err){
+			console.log(err.body);
+		});
+	}
+));
+
+
+passport.use('teacher-signin', new LocalStrategy(
+	{passReqToCallback: true},
+
+	function(req, username, password, done){
+		teacherFunct.teacherAuth(username, password).then(function (user){
+
+			if(user){
+				console.log("Logged in as " + user.username);
+				req.session.success = "You are succesfully logged in " + user.username + " !";
+				done(null, user);
+			}
+
+			if(!user){
+				console.log("COULD NOT LOG IN!");
+				req.session.error = "Could not log user in. Please try again.";
+				done(null, user);
+			}
+
+		}).fail(function(err){
+			console.log(err.body);
+		});
+	}
+));
+
 
 //===============ROUTES===============
 
@@ -119,18 +174,32 @@ app.get('/', function(req, res){
 	res.render('home', {user: req.user});
 });
 
-app.get('/signin', function(req, res){
-	res.render('signin');
+app.get('/signin-student', function(req, res){
+	res.render('signin-student');
 });
 
-app.post('/local-reg', passport.authenticate('local-signup', {
+app.get('/signin-teacher', function(req,res){
+	res.render('signin-teacher');
+});
+
+app.post('/student-reg', passport.authenticate('student-signup', {
 	successRedirect: '/',
-	failureRedirect: '/signin'
+	failureRedirect: '/signin-student'
 }));
 
-app.post('/login', passport.authenticate('local-signin', { 
+app.post('/student-login', passport.authenticate('student-signin', { 
 	successRedirect: '/',
-	failureRedirect: '/signin'
+	failureRedirect: '/signin-student'
+}));
+
+app.post('/teacher-reg', passport.authenticate('teacher-signup', {
+	successRedirect: '/',
+	failureRedirect: '/signin-teacher'
+}));
+
+app.post('/teacher-login', passport.authenticate('teacher-signin', { 
+	successRedirect: '/',
+	failureRedirect: '/signin-teacher'
 }));
 
 app.get('/logout', function(req, res){
