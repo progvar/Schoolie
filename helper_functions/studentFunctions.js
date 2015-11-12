@@ -1,9 +1,11 @@
 var bcrypt = require("bcryptjs");
 		 Q = require("q"),
-	config = require("./config.js"),
-		db = require("orchestrate")(config.db);
+	config = require("../config.js"),
+		db = require("orchestrate")(config.db);/* using orchestrate.io as a database service
+												  for the MongoDB collections*/
 
-exports.teacherReg = function(username,password){
+
+exports.studentReg = function(username,password){
 	var deferred = Q.defer();
 	var hash = bcrypt.hashSync(password.toString());
 	var user = {
@@ -11,14 +13,14 @@ exports.teacherReg = function(username,password){
 		"password": hash,
 		"avatar": "http://www.iconpot.com/icon/preview/funny-avatar.jpg"
 	}
-	db.get("teachers", username).then(function (result){
+	db.get("students", username).then(function (result){
 		console.log("Username already exists.");
 		deferred.resolve(false);
 	}).fail(function(result){
 		console.log(result.body);
 		if(result.body.message == "The requested items could not be found."){
 			console.log("Username is free for use.");
-			db.put("teachers", username, user).then(function(){
+			db.put("students", username, user).then(function(){
 				console.log("User: " + user);
 				deferred.resolve(user);
 			}).fail(function(err){
@@ -32,10 +34,10 @@ exports.teacherReg = function(username,password){
 	return deferred.promise;
 };
 
-exports.teacherAuth = function(username, password){
+exports.studentAuth = function(username, password){
 	var deferred = Q.defer();
 
-	db.get("teachers", username).then(function(result){
+	db.get("students", username).then(function(result){
 		console.log("Found User");
 		var hash = result.body.password;
 		console.log(hash);
@@ -56,3 +58,14 @@ exports.teacherAuth = function(username, password){
 	});
 	return deferred.promise;
 };
+
+
+
+
+
+
+
+
+
+
+

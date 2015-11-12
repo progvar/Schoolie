@@ -9,8 +9,8 @@
 	LocalStrategy = require('passport-local');
 
  	var config = require('./config.js'), //config file contains all tokens and other private info
-    studentFunct = require('./studentFunctions.js'),
-    teacherFunct = require('./teacherFunctions.js'); //funct files contains our helper functions for our Passport and database work
+    studentFunct = require('./helper_functions/studentFunctions.js'),
+    teacherFunct = require('./helper_functions/teacherFunctions.js'); //funct files contains our helper functions for our Passport and database work
 
     var app = express();
     app.use(express.static('public'));
