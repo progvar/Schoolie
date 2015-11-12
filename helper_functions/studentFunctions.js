@@ -11,6 +11,7 @@ exports.studentReg = function(username,password){
 	var user = {
 		"username": username,
 		"password": hash,
+		"type": "student",
 		"avatar": "http://www.iconpot.com/icon/preview/funny-avatar.jpg"
 	}
 	db.get("students", username).then(function (result){

@@ -10,6 +10,7 @@ exports.teacherReg = function(username,password){
 	var user = {
 		"username": username,
 		"password": hash,
+		"type": "teacher",
 		"avatar": "http://www.iconpot.com/icon/preview/funny-avatar.jpg"
 	}
 	db.get("teachers", username).then(function (result){
